@@ -9,10 +9,7 @@ public class TV {
     private Integer contrast;
     private String operatingSystem;
     private String colour;
-    private Integer channel;
-    private Integer volume;
-    private boolean tvOn;
-
+    private String col;
 
     public TV(int diagonal){
         this(diagonal, 10, 10, "Black", "Xiaomi OS", "Xiaomi TV");
@@ -20,8 +17,6 @@ public class TV {
     public TV(String colour, String operatingSystem, String model) {
         this(75, 10, 10, colour, operatingSystem, model);
     }
-
-
 
     public TV(int diagonal, int brightness, int contrast, String colour, String operatingSystem, String model){
         this.brightness = brightness;
@@ -86,55 +81,16 @@ public class TV {
         return model;
     }
 
-    public Integer getChannel() {
-        return channel;
-    }
-
-    public void setChannel(Integer channel) {
-        this.channel = channel;
-    }
-
-    public Integer getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Integer volume) {
-        if(volume > 100 || volume < 0) System.err.println("Звук не может быть такого значения.");
-        else this.volume = volume;
-    }
-
-    public boolean isTvOn() {
-        return tvOn;
-    }
-
-    public void setTvOn(boolean tvOn) {
-        this.tvOn = tvOn;
-    }
 
     @Override
     public String toString() {
         return "TV{" +
-                "model = '" + model + '\'' +
-                ", diagonal = " + diagonal +
+                "diagonal = " + diagonal +
                 ", brightness = " + brightness +
                 ", contrast = " + contrast +
                 ", operatingSystem = '" + operatingSystem + '\'' +
                 ", colour = '" + colour + '\'' +
-                ", channel = " + channel +
-                ", volume = " + volume +
-                ", tvOn = " + tvOn +
+                ", model = '" + model + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TV tv)) return false;
-        return model.equals(tv.model) && diagonal.equals(tv.diagonal) && operatingSystem.equals(tv.operatingSystem) && colour.equals(tv.colour);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(model, diagonal, operatingSystem, colour);
     }
 }
