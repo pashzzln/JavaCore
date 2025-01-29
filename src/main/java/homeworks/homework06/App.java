@@ -28,28 +28,52 @@ public class App {
 //        }
 //        Проверка наполняемости
 
-        String end = "";
 
-        while(end!="END"){
-            end = sc.nextLine();
+        String end = sc.nextLine();
+        int a = 0;
+        String[] exitMessage = new String[100];
+        while(!(end.equals("END"))){
             String[] buying = end.split(" - ");
             for (int i = 0; i < people.length; i++) {
                 if (people[i].getName().equals(buying[0])){
                     for (int j = 0; j < products.length; j++) {
                         if (products[j].getName().equals(buying[1])){
-                            people[i].buy(products[j]);
+                            if(people[i].getMoney()>=products[j].getCost()){
+                                people[i].getBucket()[a] = products[j];
+                                people[i].setMoney(people[i].getMoney()-products[j].getCost());
+                                exitMessage[a] = people[i].getName() + " купил " + products[j].getName();
+                                a++;
+                            } else {
+                                exitMessage[a] = people[i].getName() + " не может позволить себе " + products[j].getName();
+                                a++;
+                            }
                         }
                     }
                 }
             }
+            end = sc.nextLine();
         }
 
+        for(int i = 0; i < exitMessage.length; i++){
+            if(exitMessage[i]!=null) System.out.println(exitMessage[i]);
+        }
+
+        for(int i = 0; i < people.length; i++){
+            boolean s = true;
+            System.out.print(people[i].getName() + " - ");
+            for (int j = 0; j < 100; j++) {
+                if(people[i].getBucket()[j] != null){
+                    s = false;
+                    System.out.print(people[i].getBucket()[j].getName() + ", ");
+                }
+            }
+            if(s) System.out.print(" ничего не куплено");
+        }
     }
 }
 
 /* Павел Андреевич = 10000; Анна Петровна = 2000; Борис = 10
 Хлеб = 40; Молоко = 60; Торт = 1000; Кофе растворимый = 879; Масло = 150
-
 Павел Андреевич - Хлеб
 Павел Андреевич - Масло
 Анна Петровна - Кофе растворимый
@@ -75,7 +99,7 @@ END
 
 Женя = 0
 Мороженое = 200
-Женя Мороженое
+Женя - Мороженое
 END
 
 Женя    не   может   позволить   себе Мороженое

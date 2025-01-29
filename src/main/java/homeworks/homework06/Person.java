@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Person {
     private String name;
     private int money;
-    private Product[] bag;
+    private Product[] bucket = new Product[100];
 
     public Person(String name, int money) {
         if (name == null || name == "" || name == " ") {
@@ -21,20 +21,14 @@ public class Person {
         }
     }
 
-    public void buy(Product product) {
-        if (this.getMoney() > product.getCost()) {
-                this.bag[this.bag.length] = product;
-        } //else {
-//            System.out.printf("%s не может позволить себе %s", this.name, product.getName());
-//        }
-    }
 
     public String checkout(Person person) {
-        if (person.getBag().length == 0) {
-            return person.getName() + " - ничего не куплено";
-        } else {
-            return person.getName() + " - " + Arrays.toString(person.getBag());
+        String r;
+        r = person.getName() + " - ";
+        for (int i = 0; i < person.getBucket().length; i++) {
+            r = r + person.getBucket()[i];
         }
+        return r;
     }
 
 
@@ -55,34 +49,34 @@ public class Person {
         this.money = money;
     }
 
-    public Product[] getBag() {
-        return bag;
+    public Product[] getBucket() {
+        return bucket;
     }
 
-    public void setBag(Product[] bag) {
-        this.bag = bag;
+    public void setBucket(Product[] bucket) {
+        this.bucket = bucket;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Person person)) return false;
-        return money == person.money && Objects.equals(name, person.name) && Arrays.equals(bag, person.bag);
+        return money == person.money && Objects.equals(name, person.name) && Arrays.equals(bucket, person.bucket);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(name, money);
-        result = 31 * result + Arrays.hashCode(bag);
+        result = 31 * result + Arrays.hashCode(bucket);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", money=" + money +
-                ", bag=" + Arrays.toString(bag) +
+        return "Person {" +
+                "name = '" + name + '\'' +
+                ", money = " + money +
+                ", bag = " + Arrays.toString(bucket) +
                 '}';
     }
 }
