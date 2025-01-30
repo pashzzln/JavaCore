@@ -4,10 +4,9 @@ public class DiscountProduct extends Product{
     private int discount;
     private int deadline;
 
-    public DiscountProduct(String name, int cost, int dc, int dl) {
+    public DiscountProduct(String name, int cost, int dc) {
         super(name, cost);
         this.discount = dc;
-        this.deadline = dl;
     }
 
     public int getDiscount() {
