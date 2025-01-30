@@ -27,11 +27,10 @@ public class DiscountProduct extends Product{
 
     @Override
     public String toString() {
-        return "DiscountProduct{" +
+        return "DiscountProduct {" +
                 "name = '" + super.getName() + '\'' +
                 ", cost = " + super.getCost() +
                 "discount = " + discount +
-                ", deadline = " + deadline +
                 '}';
     }
 }
