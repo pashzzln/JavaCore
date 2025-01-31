@@ -10,7 +10,7 @@ public class Product {
         if(cost<=0){
             throw new IllegalArgumentException("Недопустимая стоимость продукта");
         }else this.cost = cost;
-        if (name == null || name == "" || name == " " || name.length()<3){
+        if (name == null || name == "" || name == " " || name.length()<3 || name.matches("[0-9]+")){
             throw new IllegalArgumentException("Недопустимое имя продукта");
         } else {
             this.name = name;
