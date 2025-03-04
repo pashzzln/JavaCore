@@ -1,5 +1,7 @@
 package attestations.attestation01.model;
 
+import attestations.attestation01.exceptions.ValidationException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,7 +24,32 @@ public class User {
             this.creationTime = LocalDateTime.now();
         }else this.creationTime = LocalDateTime.parse(elements[1], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
+        if((elements[2].length()<=20) && !(elements[2].matches("\\d+")) && (elements[2].matches("[a-zA-Z0-9]*") || elements[2].contains("_"))){
+            this.login = elements[2];
+        }else if(elements[2].length()>20) throw new ValidationException("Логин должен быть меньше 20 символов");
+        else if (elements[2].matches("\\d+")) throw new ValidationException("Логин не должен состоять только из цифр");
+        else if (!(elements[2].matches("[a-zA-Z0-9]*") | elements[2].contains("_"))) throw new ValidationException("Логин должен содержать только цифры, буквы и нижнее подчеркивание");
 
+        if ((elements[3].equals(elements[4])) && !(elements[3].matches("[a-zA-Z]*")) && (elements[3].matches("[a-zA-Z0-9]*") || elements[3].contains("_")) && (elements[3].length()<=20)){
+
+            this.password = elements[3];
+            this.confirmPassword = elements[4];
+        }else if (!(elements[3].equals(elements[4]))) throw new ValidationException("Пароли должны совпадать!");
+        else if (elements[3].length()>20) throw new ValidationException("Пароль должен быть меньше 20 символов");
+        else if (elements[3].matches("[a-zA-Z]*") | elements[4].matches("[a-zA-Z]*")) throw new ValidationException("Пароль не должен состоять только из букв!");
+        else if (!(elements[3].matches("[a-zA-Z0-9]*") | elements[3].contains("_")) | !(elements[4].matches("[a-zA-Z0-9]*") | elements[4].contains("_"))) throw new ValidationException("Пароль должен состоять только из букв, цифр и нижнего подчеркивания!");
+
+        if (elements[5].matches("[a-zA-Z]*") && elements[6].matches("[a-zA-Z]*")){
+            this.name = elements[6];
+            this.surname = elements[5];
+        }else if (!(elements[5].matches("[a-zA-Z]*"))) throw new ValidationException("Фамилия должна состоять только из букв!");
+        else if (!(elements[6].matches("[a-zA-Z]*"))) throw new ValidationException("Имя должно состоять только из букв!");
+        if (elements[7]!=null && elements[7].matches("[a-zA-Z]*")) this.patronymic = elements[7];
+        if (!(elements[7].matches("[a-zA-Z]*"))) throw new ValidationException("Отчество должно состоять только из букв!");
+
+        if(elements[8]!=null) this.age = Integer.parseInt(elements[8]);
+
+        this.isWorker = Boolean.parseBoolean(elements[9]);
     }
 
 
