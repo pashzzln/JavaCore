@@ -35,7 +35,7 @@ public class UsersRepositoryFileImpl implements UsersRepository {
         if(USERS.isEmpty()) {
             try(BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
                 List<User> usersFromFile = br.lines()
-                        .map(line -> new User())
+                        .map(line -> new User(line))
                         .toList();
                 USERS.addAll(usersFromFile);
 
