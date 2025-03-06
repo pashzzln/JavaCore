@@ -4,10 +4,8 @@ import attestations.attestation01.model.User;
 import attestations.attestation01.repository.UsersRepository;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.function.UnaryOperator;
 
 public class UsersRepositoryFileImpl implements UsersRepository {
 
@@ -16,7 +14,8 @@ public class UsersRepositoryFileImpl implements UsersRepository {
 
     @Override
     public void create(User user) {
-
+        USERS.add(user);
+        overwrite();
     }
 
     @Override
@@ -57,19 +56,10 @@ public class UsersRepositoryFileImpl implements UsersRepository {
                 .filter(user0 -> user0.getId().equals(user.getId()))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
-        String s = exChange.toString();
 
+        USERS.set(USERS.indexOf(exChange), user);
 
-
-        try(BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
-            List<User> usersFromFile = br.lines()
-                    .map(line -> new User(line))
-                    .toList();
-            USERS.addAll(usersFromFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
+        overwrite();
     }
 
     @Override
@@ -82,13 +72,33 @@ public class UsersRepositoryFileImpl implements UsersRepository {
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
         USERS.remove(remove);
+
+        overwrite();
     }
+
+
 
     @Override
     public void deleteAll() {
         USERS.clear();
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))){
             bw.write("");
+            bw.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+
+    private void overwrite() {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))){
+            bw.write("");
+            for(User u : USERS) {
+                bw.write(u.toString() + System.lineSeparator());
+            }
             bw.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
