@@ -136,7 +136,7 @@ public class User {
 
     @Override
     public String toString() {
-        return id+"|"+creationTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+"|";
+        return id+"|"+creationTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+"|"+login+"|"+password+"|"+confirmPassword+"|"+surname+"|"+name+"|"+patronymic+"|"+age+"|"+isWorker;
     }
 }
 

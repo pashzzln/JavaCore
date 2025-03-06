@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 public class UsersRepositoryFileImpl implements UsersRepository {
 
     private static final List<User> USERS = new ArrayList<>();
-    private static String FILE_PATH = "src/main/resources/input.txt";
+    private static final String FILE_PATH = "src/main/resources/input.txt";
 
     @Override
     public void create(User user) {
@@ -50,12 +50,38 @@ public class UsersRepositoryFileImpl implements UsersRepository {
 
     @Override
     public void update(User user) {
+        if(USERS.isEmpty()){
+            findAll();
+        }
+        User exChange = USERS.stream()
+                .filter(user0 -> user0.getId().equals(user.getId()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
+        String s = exChange.toString();
+
+
+
+        try(BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
+            List<User> usersFromFile = br.lines()
+                    .map(line -> new User(line))
+                    .toList();
+            USERS.addAll(usersFromFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void deleteById(String id) {
-
+        if(USERS.isEmpty()){
+            findAll();
+        }
+        User remove = USERS.stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Пользователь не найден"));
+        USERS.remove(remove);
     }
 
     @Override
