@@ -39,13 +39,13 @@ public class User {
         else if (elements[3].matches("[a-zA-Z]*") | elements[4].matches("[a-zA-Z]*")) throw new ValidationException("Пароль не должен состоять только из букв!");
         else if (!(elements[3].matches("[a-zA-Z0-9]*") | elements[3].contains("_")) | !(elements[4].matches("[a-zA-Z0-9]*") | elements[4].contains("_"))) throw new ValidationException("Пароль должен состоять только из букв, цифр и нижнего подчеркивания!");
 
-        if (elements[5].matches("[a-zA-Z]*") && elements[6].matches("[a-zA-Z]*")){
+        if (elements[5].matches("[а-яА-Я]*") && elements[6].matches("[а-яА-Я]*")){
             this.name = elements[6];
             this.surname = elements[5];
-        }else if (!(elements[5].matches("[a-zA-Z]*"))) throw new ValidationException("Фамилия должна состоять только из букв!");
-        else if (!(elements[6].matches("[a-zA-Z]*"))) throw new ValidationException("Имя должно состоять только из букв!");
-        if (elements[7]!=null && elements[7].matches("[a-zA-Z]*")) this.patronymic = elements[7];
-        if (!(elements[7].matches("[a-zA-Z]*"))) throw new ValidationException("Отчество должно состоять только из букв!");
+        }else if (!(elements[5].matches("[а-яА-Я]*"))) throw new ValidationException("Фамилия должна состоять только из букв!");
+        else if (!(elements[6].matches("[а-яА-Я]*"))) throw new ValidationException("Имя должно состоять только из букв!");
+        if (elements[7]!=null && elements[7].matches("[а-яА-Я]*")) this.patronymic = elements[7];
+        else if (!(elements[7].matches("[а-яА-Я]*"))) throw new ValidationException("Отчество должно состоять только из букв!");
 
         if(elements[8]!=null) this.age = Integer.parseInt(elements[8]);
 
