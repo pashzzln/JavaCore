@@ -18,36 +18,48 @@ public class User {
 
     public User(String line){
         String[] elements = line.split("\\|");
-        this.id = elements[0];
+
+        String idCheck = elements[0].replaceAll("-", "");
+        if(!(idCheck.matches("[a-zA-Z]+")) && !(idCheck.matches("[0-9]+")) && (idCheck.matches("[a-zA-Z0-9]*")) && (elements[0]!="")) this.id = elements[0];
+        else if(elements[0]=="") throw new NullPointerException("ID не может быть пустым");
+        else throw new ValidationException("ID должен состоять из букв и цифр");
+
 
         if(elements[1].isBlank()){
             this.creationTime = LocalDateTime.now();
         }else this.creationTime = LocalDateTime.parse(elements[1], DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
-        if((elements[2].length()<=20) && !(elements[2].matches("\\d+")) && (elements[2].matches("[a-zA-Z0-9]*") || elements[2].contains("_"))){
+        if((elements[2].length()<=20) && (elements[2].replaceAll("_", "").matches("[a-zA-Z0-9]*")) && !(elements[2].matches("[0-9]+")) && (elements[2]!="")){
             this.login = elements[2];
-        }else if(elements[2].length()>20) throw new ValidationException("Логин должен быть меньше 20 символов");
-        else if (elements[2].matches("\\d+")) throw new ValidationException("Логин не должен состоять только из цифр");
-        else if (!(elements[2].matches("[a-zA-Z0-9]*") | elements[2].contains("_"))) throw new ValidationException("Логин должен содержать только цифры, буквы и нижнее подчеркивание");
+        }else if(elements[2]=="") throw new NullPointerException("login не может быть пустым");
+        else if(elements[2].length()>20) throw new ValidationException("Логин должен быть меньше 20 символов");
+        else if (elements[2].matches("[0-9]+")) throw new ValidationException("Логин не должен состоять только из цифр");
+        else if (!(elements[2].replaceAll("_", "").matches("[a-zA-Z0-9]*"))) throw new ValidationException("Логин должен содержать только цифры, буквы и нижнее подчеркивание");
 
-        if ((elements[3].equals(elements[4])) && !(elements[3].matches("[a-zA-Z]*")) && (elements[3].matches("[a-zA-Z0-9]*") || elements[3].contains("_")) && (elements[3].length()<=20)){
-
+        if ((elements[3].equals(elements[4])) && !(elements[3].matches("[a-zA-Z]+")) && (elements[3].replaceAll("_", "").matches("[a-zA-Z0-9]*")) && (elements[3].length()<=20) && (elements[3]!="")){
             this.password = elements[3];
             this.confirmPassword = elements[4];
-        }else if (!(elements[3].equals(elements[4]))) throw new ValidationException("Пароли должны совпадать!");
+        }
+        else if (!(elements[3].equals(elements[4]))) throw new ValidationException("Пароли должны совпадать!");
+        else if(elements[3]=="") throw new NullPointerException("пароль не может быть пустым");
         else if (elements[3].length()>20) throw new ValidationException("Пароль должен быть меньше 20 символов");
-        else if (elements[3].matches("[a-zA-Z]*") | elements[4].matches("[a-zA-Z]*")) throw new ValidationException("Пароль не должен состоять только из букв!");
-        else if (!(elements[3].matches("[a-zA-Z0-9]*") | elements[3].contains("_")) | !(elements[4].matches("[a-zA-Z0-9]*") | elements[4].contains("_"))) throw new ValidationException("Пароль должен состоять только из букв, цифр и нижнего подчеркивания!");
+        else if (elements[3].matches("[a-zA-Z]+")) throw new ValidationException("Пароль не должен состоять только из букв!");
+        else if (!(elements[3].replaceAll("_", "").matches("[a-zA-Z0-9]*"))) throw new ValidationException("Пароль должен состоять только из букв, цифр и нижнего подчеркивания!");
 
-        if (elements[5].matches("[а-яА-Я]*") && elements[6].matches("[а-яА-Я]*")){
+        if (elements[5].matches("[а-яА-Я]*") && elements[6].matches("[а-яА-Я]*")  && (elements[5]!="") && (elements[6]!="")){
             this.name = elements[6];
             this.surname = elements[5];
-        }else if (!(elements[5].matches("[а-яА-Я]*"))) throw new ValidationException("Фамилия должна состоять только из букв!");
+        }else if(elements[5]=="") throw new NullPointerException("Фамилия не может быть пустой");
+        else if(elements[6]=="") throw new NullPointerException("Имя не может быть пустым");
+        else if (!(elements[5].matches("[а-яА-Я]*"))) throw new ValidationException("Фамилия должна состоять только из букв!");
         else if (!(elements[6].matches("[а-яА-Я]*"))) throw new ValidationException("Имя должно состоять только из букв!");
-        if (elements[7]!=null && elements[7].matches("[а-яА-Я]*")) this.patronymic = elements[7];
+
+        if (elements[7]==null || elements[7].matches("[а-яА-Я]*")) this.patronymic = elements[7];
         else if (!(elements[7].matches("[а-яА-Я]*"))) throw new ValidationException("Отчество должно состоять только из букв!");
 
-        if(elements[8]!=null) this.age = Integer.parseInt(elements[8]);
+        if(elements[8]!=null && (Integer.parseInt(elements[8])>=0)  && (elements[0]!="")) this.age = Integer.parseInt(elements[8]);
+        else if(elements[8]==null || elements[8] == "") throw new NullPointerException("Возраст не может быть пустым");
+        else if(Integer.parseInt(elements[8])<0) throw new ValidationException("Возраст может быть не меньше нуля");
 
         this.isWorker = Boolean.parseBoolean(elements[9]);
     }

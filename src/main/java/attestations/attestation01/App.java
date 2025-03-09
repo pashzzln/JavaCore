@@ -26,5 +26,8 @@ public class App {
         System.out.println("");
         usersRepository.update(new User("f5a8a3cb-4ac9-4b3b-8a65-c424e129b9d2||vityok_12|789ghs|789ghs|Крылов|Виктор|Павлович|45|false")); //обновление информации об элементе
         System.out.println(usersRepository.findAll());
+        System.out.println("");
+        usersRepository.deleteAll();
+        System.out.println(usersRepository.findAll());
     }
 }
