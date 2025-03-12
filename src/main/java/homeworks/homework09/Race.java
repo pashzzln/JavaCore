@@ -1,6 +1,12 @@
 package homeworks.homework09;
 
+import java.util.ArrayList;
+
 public class Race {
+    private int length;
+    private String route;
+    private int prize;
+    private ArrayList<Car> participants;
 }
 
 /* Гонка   имеет   следующие   свойства:
