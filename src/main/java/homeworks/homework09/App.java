@@ -1,8 +1,10 @@
 package homeworks.homework09;
 
 public class App {
-    Car showcar = new ShowCar();
-
+    public static void main(String[] args) {
+        Car showcar = new ShowCar();
+        System.out.println(showcar.toString());
+    }
 }
 
 /*Каждый из представленных классов должен включать:
