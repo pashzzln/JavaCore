@@ -48,7 +48,7 @@ public class PerformanceCar extends Car{
                 ", boost=" + getBoost() +
                 ", pendant=" + getPendant() +
                 ", durability=" + getDurability() +
-                "addOns=" + Arrays.toString(addOns) +
+                ", addOns=" + Arrays.toString(addOns) +
                 '}';
     }
 }

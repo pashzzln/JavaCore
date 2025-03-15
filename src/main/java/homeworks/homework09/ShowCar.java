@@ -46,7 +46,7 @@ public class ShowCar extends Car{
                 ", boost=" + getBoost() +
                 ", pendant=" + getPendant() +
                 ", durability=" + getDurability() +
-                "stars=" + stars +
+                ", stars=" + stars +
                 '}';
     }
 }
