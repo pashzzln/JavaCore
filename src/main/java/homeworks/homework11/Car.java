@@ -63,5 +63,6 @@ public class Car {
                 ", mileage = " + mileage +
                 ", cost = " + cost +
                 '}';
+
     }
 }

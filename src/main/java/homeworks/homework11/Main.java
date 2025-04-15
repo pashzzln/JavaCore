@@ -43,6 +43,7 @@ public class Main {
             c += cars1.get(i).getCost();
         }
         System.out.print("Средняя стоимость модели " + modelToFind + ": " + c/cars1.size());
+
     }
 }
 /*
