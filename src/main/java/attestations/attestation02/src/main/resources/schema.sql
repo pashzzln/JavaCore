@@ -134,3 +134,5 @@ INSERT INTO orders (product_id, user_id, order_date, quantity)
 VALUES(6, 3, '2024-06-01 16:56:34', 1);
 INSERT INTO orders (product_id, user_id, order_date, quantity)
 VALUES(9, 3, '2024-02-01 12:53:34', 1);
+
+--1

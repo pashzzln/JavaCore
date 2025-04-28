@@ -110,4 +110,4 @@ WHERE user_id = 2;
 DELETE FROM orders --удаление всех заказов с датой 12 июля 24 года
 WHERE order_date = '2024-07-12';
 
-
+--1
